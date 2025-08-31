@@ -1,0 +1,33 @@
+import React, { useState, useEffect } from 'react';
+
+const Header: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md shadow-lg shadow-cyan-500/10' : 'bg-transparent'}`}>
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center">
+           <img src="https://veksol.com/wp-content/uploads/2025/04/footer-logo-veksol.png" alt="Vektor Solutions Logo" className="h-12" />
+        </div>
+        <a 
+          href="https://veksol.com/contact-us/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-cyan-500 text-black font-bold py-2 px-6 rounded-full transition-all duration-300 hover:bg-white hover:shadow-lg hover:shadow-cyan-400/50 transform hover:-translate-y-1"
+        >
+          Contact Us
+        </a>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

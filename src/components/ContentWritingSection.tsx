@@ -100,8 +100,8 @@ const ContentWritingSection: React.FC = () => {
                                                 : 'scale-100 opacity-80'
                                     }`}
                                     style={{
-                                        left: `${30 + (index % 3) * 150}px`,
-                                        top: `${80 + Math.floor(index / 3) * 120}px`,
+                                        left: `${20 + (index % 3) * 120}px`,
+                                        top: `${60 + Math.floor(index / 3) * 100}px`,
                                         animationDelay: `${index * 0.2}s`
                                     }}
                                     onClick={() => handleTagClick(tag.id)}
@@ -137,22 +137,24 @@ const ContentWritingSection: React.FC = () => {
                                 </div>
                             ))}
 
-                            {/* Click Info Panel */}
+                            {/* Click Info Panel - Right Side Vertical Rectangle */}
                             {clickedTag && (
-                                <div className="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-sm border border-cyan-400/50 rounded-lg p-4 transition-all duration-500 ease-out">
-                                    <div className="flex items-center gap-3 mb-2">
+                                <div className="absolute right-4 top-4 bottom-4 w-64 bg-gray-900/95 backdrop-blur-sm border border-cyan-400/50 rounded-lg p-4 transition-all duration-500 ease-out overflow-y-auto">
+                                    <div className="flex items-center gap-3 mb-4">
                                         <div 
-                                            className="w-3 h-3 rounded-full"
+                                            className="w-4 h-4 rounded-full"
                                             style={{ backgroundColor: getCurrentTag()?.color }}
                                         ></div>
-                                        <span className="text-cyan-400 font-bold text-lg">
+                                        <span className="text-cyan-400 font-bold text-xl">
                                             {getCurrentTag()?.text}
                                         </span>
-                                        <span className="text-gray-400 text-sm bg-gray-800 px-2 py-1 rounded">
+                                    </div>
+                                    <div className="mb-4">
+                                        <span className="text-gray-400 text-sm bg-gray-800 px-3 py-1 rounded-full">
                                             {getCurrentTag()?.category}
                                         </span>
                                     </div>
-                                    <p className="text-gray-300 text-sm">
+                                    <p className="text-gray-300 text-sm leading-relaxed">
                                         {getCurrentTag()?.description}
                                     </p>
                                 </div>

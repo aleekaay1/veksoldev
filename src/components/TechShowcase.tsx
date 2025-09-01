@@ -26,12 +26,30 @@ const TechShowcase: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.2 });
 
     const technologies = [
-        { name: "React", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.478 0 0 4.478 0 10s4.478 10 10 10 10-4.478 10-10S15.522 0 10 0zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"/><path d="M10 4.5c-.28 0-.5.22-.5.5v1c0 .28.22.5.5.5s.5-.22.5-.5v-1c0-.28-.22-.5-.5-.5zm-4.1 1.04c-.2-.2-.51-.2-.71 0l-.71.71c-.2.2-.2.51 0 .71.1.1.23.15.35.15s.26-.05.35-.15l.71-.71c.2-.2.2-.51 0-.71zm8.2 0c.2-.2.2-.51 0-.71l-.71-.71c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l.71.71c.2.2.51.2.71 0zm-1.04 8.2c.2.2.51.2.71 0l.71-.71c.2-.2.2-.51 0-.71s-.51-.2-.71 0l-.71.71c-.2.2-.2.51 0 .71zM4.75 13.25c.1.1.23.15.35.15s.26-.05.35-.15l.71-.71c.2-.2.2-.51 0-.71s-.51-.2-.71 0l-.71.71c-.2.2-.2.51 0 .71zM10 13.5c.28 0 .5.22.5.5v1c0 .28-.22.5-.5.5s-.5-.22-.5-.5v-1c0-.28.22-.5-.5.5z"/></svg> },
-        { name: "Node.js", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM8.5 15.5h-1V4.5h1v11zm3-11h-1V15.5h1V4.5zM13.5 15.5h-1V4.5h1v11zM15.5 15.5h-1V4.5h1v11zM6.5 15.5h-1V4.5h1v11zM4.5 15.5h-1V4.5h1v11z"/></svg> },
-        { name: "WordPress", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM8.5 15.5h-1V4.5h1v11zm3-11h-1V15.5h1V4.5z"/></svg> },
-        { name: "Figma", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM8.5 15.5h-1V4.5h1v11zm3-11h-1V15.5h1V4.5zM13.5 15.5h-1V4.5h1v11z"/></svg> },
-        { name: "SQL", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm-1 15.5h-1V4.5h1v11zm3-11h-1V15.5h1V4.5z"/></svg> },
-        { name: "JavaScript", logo: <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM8.5 15.5h-1V4.5h1v11zm3-11h-1V15.5h1V4.5z"/></svg> }
+        { 
+            name: "React", 
+            logo: <img src="https://cpng.pikpng.com/pngl/s/269-2690057_we-design-and-develop-mobile-apps-in-react.png" alt="React" className="w-full h-full object-contain" />
+        },
+        { 
+            name: "Node.js", 
+            logo: <img src="https://nodejs.org/download/release/v0.10.39/docs/api/assets/logo.svg" alt="Node.js" className="w-full h-full object-contain" />
+        },
+        { 
+            name: "WordPress", 
+            logo: <img src="https://s.w.org/style/images/about/WordPress-logotype-alternative-white.png" alt="WordPress" className="w-full h-full object-contain" />
+        },
+        { 
+            name: "Figma", 
+            logo: <img src="https://static.vecteezy.com/system/resources/previews/065/386/862/non_2x/figma-white-logo-icon-figma-app-editable-transparent-background-premium-social-media-design-for-digital-download-free-png.png" alt="Figma" className="w-full h-full object-contain" />
+        },
+        { 
+            name: "SQL", 
+            logo: <img src="https://software.3metas.com/wp-content/uploads/2017/06/microsoftsqlBE.png" alt="SQL" className="w-full h-full object-contain" />
+        },
+        { 
+            name: "OpenAI", 
+            logo: <img src="https://ai.ls/assets/openai-logos/SVGs/openai-white-lockup.svg" alt="OpenAI" className="w-full h-full object-contain" />
+        }
     ];
 
     return (

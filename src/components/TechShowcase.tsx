@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 
-const TechLogo: React.FC<{ name: string; logo: React.ReactNode; index: number }> = ({ name, logo, index }) => {
+const TechLogo: React.FC<{ name: string; logo: React.ReactNode; index: number }> = ({ logo, index }) => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.5 });
     const delay = index * 100;
 
@@ -9,14 +9,13 @@ const TechLogo: React.FC<{ name: string; logo: React.ReactNode; index: number }>
         <div
             ref={ref}
             className={`
-                bg-gray-800/60 border border-gray-700 rounded-lg p-4 flex flex-col items-center justify-center gap-2
+                flex items-center justify-center
                 transition-all duration-500 ease-out transform
                 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}
             `}
             style={{ transitionDelay: `${delay}ms` }}
         >
-            <div className="h-10 w-10 text-gray-300 flex items-center justify-center">{logo}</div>
-            <p className="font-mono text-cyan-300 text-sm">{name}</p>
+            <div className="h-32 w-32 text-gray-300 flex items-center justify-center">{logo}</div>
         </div>
     );
 };
@@ -28,7 +27,7 @@ const TechShowcase: React.FC = () => {
     const technologies = [
         { 
             name: "React", 
-            logo: <img src="https://cpng.pikpng.com/pngl/s/269-2690057_we-design-and-develop-mobile-apps-in-react.png" alt="React" className="w-full h-full object-contain" />
+            logo: <img src="https://img.icons8.com/carbon_copy/512/EBEBEB/react.png" alt="React" className="w-full h-full object-contain" />
         },
         { 
             name: "Node.js", 
@@ -75,7 +74,7 @@ const TechShowcase: React.FC = () => {
                             From private, on-device AI with Local LLMs to globally-scalable web platforms, our technical expertise is the bedrock of your success.
                         </p>
                     </div>
-                    <div className="grid grid-cols-3 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 sm:grid-cols-3 gap-8">
                        {technologies.map((tech, index) => (
                            <TechLogo key={tech.name} name={tech.name} logo={tech.logo} index={index} />
                        ))}

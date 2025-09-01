@@ -4,7 +4,7 @@ import { SERVICES } from '../constants';
 
 const ContentWritingSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
-    const [hoveredTag, setHoveredTag] = useState<string | null>(null);
+    const [clickedTag, setClickedTag] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const service = SERVICES[5];
 
@@ -22,16 +22,12 @@ const ContentWritingSection: React.FC = () => {
         { id: 'backlinks', text: 'Backlinks', color: '#6366f1', category: 'Off-Page', description: 'External authority and trust signals' }
     ];
 
-    const handleTagHover = (tagId: string) => {
-        setHoveredTag(tagId);
-    };
-
-    const handleTagLeave = () => {
-        setHoveredTag(null);
+    const handleTagClick = (tagId: string) => {
+        setClickedTag(clickedTag === tagId ? null : tagId);
     };
 
     const getCurrentTag = () => {
-        return seoTags.find(tag => tag.id === hoveredTag);
+        return seoTags.find(tag => tag.id === clickedTag);
     };
 
     return (
@@ -97,19 +93,18 @@ const ContentWritingSection: React.FC = () => {
                                 <div
                                     key={tag.id}
                                     className={`absolute cursor-pointer transition-all duration-700 ease-out transform ${
-                                        hoveredTag === tag.id 
+                                        clickedTag === tag.id 
                                             ? 'scale-125 z-20' 
-                                            : hoveredTag 
+                                            : clickedTag 
                                                 ? 'scale-90 opacity-40' 
                                                 : 'scale-100 opacity-80'
                                     }`}
                                     style={{
-                                        left: `${20 + (index % 3) * 120}px`,
-                                        top: `${60 + Math.floor(index / 3) * 100}px`,
+                                        left: `${30 + (index % 3) * 150}px`,
+                                        top: `${80 + Math.floor(index / 3) * 120}px`,
                                         animationDelay: `${index * 0.2}s`
                                     }}
-                                    onMouseEnter={() => handleTagHover(tag.id)}
-                                    onMouseLeave={handleTagLeave}
+                                    onClick={() => handleTagClick(tag.id)}
                                 >
                                     {/* Tag Background with Glow */}
                                     <div 
@@ -118,7 +113,7 @@ const ContentWritingSection: React.FC = () => {
                                             color: tag.color,
                                             borderColor: tag.color,
                                             backgroundColor: `${tag.color}15`,
-                                            boxShadow: hoveredTag === tag.id 
+                                            boxShadow: clickedTag === tag.id 
                                                 ? `0 0 30px ${tag.color}80, 0 0 60px ${tag.color}40` 
                                                 : `0 0 15px ${tag.color}40`
                                         }}
@@ -128,8 +123,8 @@ const ContentWritingSection: React.FC = () => {
                                             {tag.text}
                                         </div>
                                         
-                                        {/* Hover Effect Ring */}
-                                        {hoveredTag === tag.id && (
+                                        {/* Click Effect Ring */}
+                                        {clickedTag === tag.id && (
                                             <div 
                                                 className="absolute inset-0 rounded-lg animate-ping"
                                                 style={{
@@ -142,26 +137,8 @@ const ContentWritingSection: React.FC = () => {
                                 </div>
                             ))}
 
-                            {/* Central SEO Hub */}
-                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                <div className={`w-24 h-24 rounded-full border-4 transition-all duration-700 ease-out ${
-                                    hoveredTag ? 'border-cyan-400 scale-110' : 'border-gray-600 scale-100'
-                                }`}
-                                style={{
-                                    background: hoveredTag 
-                                        ? 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%)'
-                                        : 'radial-gradient(circle, rgba(75, 85, 99, 0.1) 0%, transparent 70%)'
-                                }}>
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Hover Info Panel */}
-                            {hoveredTag && (
+                            {/* Click Info Panel */}
+                            {clickedTag && (
                                 <div className="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-sm border border-cyan-400/50 rounded-lg p-4 transition-all duration-500 ease-out">
                                     <div className="flex items-center gap-3 mb-2">
                                         <div 
@@ -184,7 +161,7 @@ const ContentWritingSection: React.FC = () => {
                             {/* Instructions */}
                             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center">
                                 <p className="text-xs text-gray-500 font-mono bg-black/50 px-3 py-1 rounded-full">
-                                    {hoveredTag ? 'Explore SEO elements' : 'Hover over tags to learn more'}
+                                    {clickedTag ? 'Explore SEO elements' : 'Click tags to learn more'}
                                 </p>
                             </div>
                         </div>

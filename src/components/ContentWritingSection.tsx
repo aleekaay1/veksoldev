@@ -1,75 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
 
 const ContentWritingSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
-    const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [hoveredTag, setHoveredTag] = useState<string | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const service = SERVICES[5];
 
-    // SEO data points with their positions and information
-    const seoDataPoints = [
-        {
-            id: 'research',
-            x: 100,
-            y: 200,
-            stage: 'Research Phase',
-            tags: ['Keyword Research', 'Competitor Analysis', 'Content Gap Analysis'],
-            metrics: { difficulty: 'Medium', volume: 'High', cpc: '$2.50' }
-        },
-        {
-            id: 'onpage',
-            x: 200,
-            y: 150,
-            stage: 'On-Page Optimization',
-            tags: ['Meta Tags', 'Content Optimization', 'Internal Linking'],
-            metrics: { difficulty: 'Low', volume: 'Medium', cpc: '$1.80' }
-        },
-        {
-            id: 'technical',
-            x: 250,
-            y: 120,
-            stage: 'Technical SEO',
-            tags: ['Site Speed', 'Mobile Optimization', 'Schema Markup'],
-            metrics: { difficulty: 'High', volume: 'High', cpc: '$3.20' }
-        },
-        {
-            id: 'content',
-            x: 300,
-            y: 80,
-            stage: 'Content Strategy',
-            tags: ['Blog Posts', 'Infographics', 'Video Content'],
-            metrics: { difficulty: 'Medium', volume: 'Very High', cpc: '$2.10' }
-        },
-        {
-            id: 'ranking',
-            x: 350,
-            y: 60,
-            stage: 'Ranking Achievement',
-            tags: ['Top 3 Position', 'Featured Snippets', 'Local Pack'],
-            metrics: { difficulty: 'Very High', volume: 'Extreme', cpc: '$5.00' }
-        }
+    // SEO tags with different colors and categories
+    const seoTags = [
+        { id: 'meta', text: 'Meta Tags', color: '#22d3ee', category: 'On-Page', description: 'Title, description, and meta information' },
+        { id: 'keywords', text: 'Keywords', color: '#f59e0b', category: 'Research', description: 'Target keywords and search terms' },
+        { id: 'schema', text: 'Schema', color: '#8b5cf6', category: 'Technical', description: 'Structured data markup' },
+        { id: 'alt', text: 'Alt Text', color: '#10b981', category: 'On-Page', description: 'Image accessibility and SEO' },
+        { id: 'headings', text: 'H1-H6', color: '#ef4444', category: 'Content', description: 'Heading hierarchy and structure' },
+        { id: 'links', text: 'Internal Links', color: '#06b6d4', category: 'Navigation', description: 'Site structure and user flow' },
+        { id: 'speed', text: 'Page Speed', color: '#f97316', category: 'Technical', description: 'Core Web Vitals optimization' },
+        { id: 'mobile', text: 'Mobile First', color: '#84cc16', category: 'Technical', description: 'Responsive design and mobile optimization' },
+        { id: 'core', text: 'Core Web Vitals', color: '#ec4899', category: 'Performance', description: 'LCP, FID, and CLS metrics' },
+        { id: 'backlinks', text: 'Backlinks', color: '#6366f1', category: 'Off-Page', description: 'External authority and trust signals' }
     ];
 
-    const handleMouseMove = (event: React.MouseEvent<SVGSVGElement>) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        setMousePosition({
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top
-        });
+    const handleTagHover = (tagId: string) => {
+        setHoveredTag(tagId);
     };
 
-    const handlePointHover = (pointId: string) => {
-        setHoveredPoint(pointId);
+    const handleTagLeave = () => {
+        setHoveredTag(null);
     };
 
-    const handlePointLeave = () => {
-        setHoveredPoint(null);
-    };
-
-    const getCurrentPoint = () => {
-        return seoDataPoints.find(point => point.id === hoveredPoint);
+    const getCurrentTag = () => {
+        return seoTags.find(tag => tag.id === hoveredTag);
     };
 
     return (
@@ -116,187 +78,115 @@ const ContentWritingSection: React.FC = () => {
                         </ul>
                     </div>
                     
-                    {/* Interactive SEO Graph */}
-                    <div className="relative w-full h-96 flex items-center justify-center p-4">
-                        <svg 
-                            viewBox="0 0 400 300" 
-                            className="w-full h-full cursor-pointer"
-                            onMouseMove={handleMouseMove}
+                    {/* Interactive SEO Tags Animation */}
+                    <div className="relative w-full h-96 flex items-center justify-center">
+                        <div 
+                            ref={containerRef}
+                            className="relative w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-xl border border-gray-700 overflow-hidden"
                         >
-                            {/* Background Grid */}
-                            <defs>
-                                <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-                                    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#1f2937" strokeWidth="0.5" opacity="0.3"/>
-                                </pattern>
-                            </defs>
-                            <rect width="400" height="300" fill="url(#grid)" />
-                            
-                            {/* Axis */}
-                            <path d="M 50 250 L 50 50" stroke="#374151" strokeWidth="2" />
-                            <path d="M 50 250 L 350 250" stroke="#374151" strokeWidth="2" />
-                            <text x="35" y="60" textAnchor="end" fill="#6b7280" className="text-sm font-mono">Traffic</text>
-                            <text x="340" y="270" textAnchor="end" fill="#6b7280" className="text-sm font-mono">Time</text>
-                            
-                            {/* Growth Line */}
-                            <path
-                                d="M 50 250 Q 150 200, 250 100 T 350 60"
-                                fill="none"
-                                stroke="#22d3ee"
-                                strokeWidth="4"
-                                strokeLinecap="round"
-                                className="transition-all duration-[2000ms] ease-out"
-                                style={{
-                                    strokeDasharray: 500,
-                                    strokeDashoffset: isVisible ? 0 : 500,
-                                    filter: 'drop-shadow(0 0 5px #22d3ee)'
-                                }}
-                            />
+                            {/* Background Pattern */}
+                            <div className="absolute inset-0 opacity-5">
+                                <div className="absolute inset-0" style={{
+                                    backgroundImage: `radial-gradient(circle at 25% 25%, #22d3ee 2px, transparent 2px)`,
+                                    backgroundSize: '50px 50px'
+                                }}></div>
+                            </div>
 
-                            {/* Interactive Data Points */}
-                            {seoDataPoints.map((point, index) => (
-                                <g key={point.id}>
-                                    {/* Hover Area */}
-                                    <circle
-                                        cx={point.x}
-                                        cy={point.y}
-                                        r="20"
-                                        fill="transparent"
-                                        onMouseEnter={() => handlePointHover(point.id)}
-                                        onMouseLeave={handlePointLeave}
-                                        className="cursor-pointer"
-                                    />
-                                    
-                                    {/* Data Point */}
-                                    <circle
-                                        cx={point.x}
-                                        cy={point.y}
-                                        r="8"
-                                        fill={hoveredPoint === point.id ? "#22d3ee" : "#083344"}
-                                        stroke={hoveredPoint === point.id ? "#ffffff" : "#22d3ee"}
-                                        strokeWidth={hoveredPoint === point.id ? "3" : "2"}
-                                        className="transition-all duration-300 ease-out"
+                            {/* Floating SEO Tags */}
+                            {seoTags.map((tag, index) => (
+                                <div
+                                    key={tag.id}
+                                    className={`absolute cursor-pointer transition-all duration-700 ease-out transform ${
+                                        hoveredTag === tag.id 
+                                            ? 'scale-125 z-20' 
+                                            : hoveredTag 
+                                                ? 'scale-90 opacity-40' 
+                                                : 'scale-100 opacity-80'
+                                    }`}
+                                    style={{
+                                        left: `${20 + (index % 3) * 120}px`,
+                                        top: `${60 + Math.floor(index / 3) * 100}px`,
+                                        animationDelay: `${index * 0.2}s`
+                                    }}
+                                    onMouseEnter={() => handleTagHover(tag.id)}
+                                    onMouseLeave={handleTagLeave}
+                                >
+                                    {/* Tag Background with Glow */}
+                                    <div 
+                                        className="relative px-4 py-3 rounded-lg border-2 font-mono font-bold text-sm transition-all duration-500"
                                         style={{
-                                            filter: hoveredPoint === point.id ? 'drop-shadow(0 0 8px #22d3ee)' : 'none'
+                                            color: tag.color,
+                                            borderColor: tag.color,
+                                            backgroundColor: `${tag.color}15`,
+                                            boxShadow: hoveredTag === tag.id 
+                                                ? `0 0 30px ${tag.color}80, 0 0 60px ${tag.color}40` 
+                                                : `0 0 15px ${tag.color}40`
                                         }}
-                                    />
-                                    
-                                    {/* Pulse Effect on Hover */}
-                                    {hoveredPoint === point.id && (
-                                        <circle
-                                            cx={point.x}
-                                            cy={point.y}
-                                            r="25"
-                                            fill="none"
-                                            stroke="#22d3ee"
-                                            strokeWidth="1"
-                                            opacity="0.6"
-                                            className="animate-ping"
-                                        />
-                                    )}
-                                </g>
+                                    >
+                                        {/* Floating Animation */}
+                                        <div className={`${isVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
+                                            {tag.text}
+                                        </div>
+                                        
+                                        {/* Hover Effect Ring */}
+                                        {hoveredTag === tag.id && (
+                                            <div 
+                                                className="absolute inset-0 rounded-lg animate-ping"
+                                                style={{
+                                                    backgroundColor: tag.color,
+                                                    opacity: 0.3
+                                                }}
+                                            ></div>
+                                        )}
+                                    </div>
+                                </div>
                             ))}
 
-                            {/* SEO Tags and Stages Tooltip */}
-                            {hoveredPoint && (
-                                <g className="pointer-events-none">
-                                    {/* Tooltip Background */}
-                                    <rect
-                                        x={mousePosition.x + 20}
-                                        y={mousePosition.y - 80}
-                                        width="280"
-                                        height="160"
-                                        rx="8"
-                                        fill="#0f172a"
-                                        stroke="#22d3ee"
-                                        strokeWidth="2"
-                                        opacity="0.95"
-                                        className="drop-shadow-2xl"
-                                    />
-                                    
-                                    {/* Stage Title */}
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y - 55}
-                                        fill="#22d3ee"
-                                        className="font-bold text-sm"
-                                        fontSize="14"
-                                    >
-                                        {getCurrentPoint()?.stage}
-                                    </text>
-                                    
-                                    {/* SEO Tags */}
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y - 35}
-                                        fill="#ffffff"
-                                        className="font-semibold text-xs"
-                                        fontSize="12"
-                                    >
-                                        SEO Tags:
-                                    </text>
-                                    
-                                    {getCurrentPoint()?.tags.map((tag, index) => (
-                                        <text
-                                            key={index}
-                                            x={mousePosition.x + 35}
-                                            y={mousePosition.y - 20 + (index * 15)}
-                                            fill="#94a3b8"
-                                            className="text-xs"
-                                            fontSize="11"
-                                        >
-                                            • {tag}
-                                        </text>
-                                    ))}
-                                    
-                                    {/* Metrics */}
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y + 20}
-                                        fill="#ffffff"
-                                        className="font-semibold text-xs"
-                                        fontSize="12"
-                                    >
-                                        Metrics:
-                                    </text>
-                                    
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y + 35}
-                                        fill="#94a3b8"
-                                        className="text-xs"
-                                        fontSize="11"
-                                    >
-                                        Difficulty: {getCurrentPoint()?.metrics.difficulty}
-                                    </text>
-                                    
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y + 50}
-                                        fill="#94a3b8"
-                                        className="text-xs"
-                                        fontSize="11"
-                                    >
-                                        Volume: {getCurrentPoint()?.metrics.volume}
-                                    </text>
-                                    
-                                    <text
-                                        x={mousePosition.x + 35}
-                                        y={mousePosition.y + 65}
-                                        fill="#94a3b8"
-                                        className="text-xs"
-                                        fontSize="11"
-                                    >
-                                        CPC: {getCurrentPoint()?.metrics.cpc}
-                                    </text>
-                                </g>
+                            {/* Central SEO Hub */}
+                            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div className={`w-24 h-24 rounded-full border-4 transition-all duration-700 ease-out ${
+                                    hoveredTag ? 'border-cyan-400 scale-110' : 'border-gray-600 scale-100'
+                                }`}
+                                style={{
+                                    background: hoveredTag 
+                                        ? 'radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%)'
+                                        : 'radial-gradient(circle, rgba(75, 85, 99, 0.1) 0%, transparent 70%)'
+                                }}>
+                                    <div className="w-full h-full flex items-center justify-center">
+                                        <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Hover Info Panel */}
+                            {hoveredTag && (
+                                <div className="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-sm border border-cyan-400/50 rounded-lg p-4 transition-all duration-500 ease-out">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div 
+                                            className="w-3 h-3 rounded-full"
+                                            style={{ backgroundColor: getCurrentTag()?.color }}
+                                        ></div>
+                                        <span className="text-cyan-400 font-bold text-lg">
+                                            {getCurrentTag()?.text}
+                                        </span>
+                                        <span className="text-gray-400 text-sm bg-gray-800 px-2 py-1 rounded">
+                                            {getCurrentTag()?.category}
+                                        </span>
+                                    </div>
+                                    <p className="text-gray-300 text-sm">
+                                        {getCurrentTag()?.description}
+                                    </p>
+                                </div>
                             )}
-                        </svg>
-                        
-                        {/* Instructions */}
-                        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
-                            <p className="text-xs text-gray-500 font-mono">
-                                Hover over the graph points to see SEO stages & tags
-                            </p>
+
+                            {/* Instructions */}
+                            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-center">
+                                <p className="text-xs text-gray-500 font-mono bg-black/50 px-3 py-1 rounded-full">
+                                    {hoveredTag ? 'Explore SEO elements' : 'Hover over tags to learn more'}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

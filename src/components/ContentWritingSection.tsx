@@ -1,10 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
 
 const ContentWritingSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
+    const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const service = SERVICES[5];
+
+    // SEO data points with their positions and information
+    const seoDataPoints = [
+        {
+            id: 'research',
+            x: 100,
+            y: 200,
+            stage: 'Research Phase',
+            tags: ['Keyword Research', 'Competitor Analysis', 'Content Gap Analysis'],
+            metrics: { difficulty: 'Medium', volume: 'High', cpc: '$2.50' }
+        },
+        {
+            id: 'onpage',
+            x: 200,
+            y: 150,
+            stage: 'On-Page Optimization',
+            tags: ['Meta Tags', 'Content Optimization', 'Internal Linking'],
+            metrics: { difficulty: 'Low', volume: 'Medium', cpc: '$1.80' }
+        },
+        {
+            id: 'technical',
+            x: 250,
+            y: 120,
+            stage: 'Technical SEO',
+            tags: ['Site Speed', 'Mobile Optimization', 'Schema Markup'],
+            metrics: { difficulty: 'High', volume: 'High', cpc: '$3.20' }
+        },
+        {
+            id: 'content',
+            x: 300,
+            y: 80,
+            stage: 'Content Strategy',
+            tags: ['Blog Posts', 'Infographics', 'Video Content'],
+            metrics: { difficulty: 'Medium', volume: 'Very High', cpc: '$2.10' }
+        },
+        {
+            id: 'ranking',
+            x: 350,
+            y: 60,
+            stage: 'Ranking Achievement',
+            tags: ['Top 3 Position', 'Featured Snippets', 'Local Pack'],
+            metrics: { difficulty: 'Very High', volume: 'Extreme', cpc: '$5.00' }
+        }
+    ];
+
+    const handleMouseMove = (event: React.MouseEvent<SVGSVGElement>) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setMousePosition({
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        });
+    };
+
+    const handlePointHover = (pointId: string) => {
+        setHoveredPoint(pointId);
+    };
+
+    const handlePointLeave = () => {
+        setHoveredPoint(null);
+    };
+
+    const getCurrentPoint = () => {
+        return seoDataPoints.find(point => point.id === hoveredPoint);
+    };
 
     return (
         <section id="seo-services" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden">
@@ -49,8 +115,22 @@ const ContentWritingSection: React.FC = () => {
                             </li>
                         </ul>
                     </div>
+                    
+                    {/* Interactive SEO Graph */}
                     <div className="relative w-full h-96 flex items-center justify-center p-4">
-                        <svg viewBox="0 0 400 300" className="w-full h-full">
+                        <svg 
+                            viewBox="0 0 400 300" 
+                            className="w-full h-full cursor-pointer"
+                            onMouseMove={handleMouseMove}
+                        >
+                            {/* Background Grid */}
+                            <defs>
+                                <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                                    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#1f2937" strokeWidth="0.5" opacity="0.3"/>
+                                </pattern>
+                            </defs>
+                            <rect width="400" height="300" fill="url(#grid)" />
+                            
                             {/* Axis */}
                             <path d="M 50 250 L 50 50" stroke="#374151" strokeWidth="2" />
                             <path d="M 50 250 L 350 250" stroke="#374151" strokeWidth="2" />
@@ -72,12 +152,152 @@ const ContentWritingSection: React.FC = () => {
                                 }}
                             />
 
-                            {/* Ranking Bubble */}
-                            <g className={`transition-all duration-1000 ease-in-out delay-[1500ms] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                                <circle cx="350" cy="60" r="25" fill="#083344" stroke="#22d3ee" strokeWidth="2" />
-                                <text x="350" y="65" textAnchor="middle" fill="#fff" className="font-bold text-lg">#1</text>
-                            </g>
+                            {/* Interactive Data Points */}
+                            {seoDataPoints.map((point, index) => (
+                                <g key={point.id}>
+                                    {/* Hover Area */}
+                                    <circle
+                                        cx={point.x}
+                                        cy={point.y}
+                                        r="20"
+                                        fill="transparent"
+                                        onMouseEnter={() => handlePointHover(point.id)}
+                                        onMouseLeave={handlePointLeave}
+                                        className="cursor-pointer"
+                                    />
+                                    
+                                    {/* Data Point */}
+                                    <circle
+                                        cx={point.x}
+                                        cy={point.y}
+                                        r="8"
+                                        fill={hoveredPoint === point.id ? "#22d3ee" : "#083344"}
+                                        stroke={hoveredPoint === point.id ? "#ffffff" : "#22d3ee"}
+                                        strokeWidth={hoveredPoint === point.id ? "3" : "2"}
+                                        className="transition-all duration-300 ease-out"
+                                        style={{
+                                            filter: hoveredPoint === point.id ? 'drop-shadow(0 0 8px #22d3ee)' : 'none'
+                                        }}
+                                    />
+                                    
+                                    {/* Pulse Effect on Hover */}
+                                    {hoveredPoint === point.id && (
+                                        <circle
+                                            cx={point.x}
+                                            cy={point.y}
+                                            r="25"
+                                            fill="none"
+                                            stroke="#22d3ee"
+                                            strokeWidth="1"
+                                            opacity="0.6"
+                                            className="animate-ping"
+                                        />
+                                    )}
+                                </g>
+                            ))}
+
+                            {/* SEO Tags and Stages Tooltip */}
+                            {hoveredPoint && (
+                                <g className="pointer-events-none">
+                                    {/* Tooltip Background */}
+                                    <rect
+                                        x={mousePosition.x + 20}
+                                        y={mousePosition.y - 80}
+                                        width="280"
+                                        height="160"
+                                        rx="8"
+                                        fill="#0f172a"
+                                        stroke="#22d3ee"
+                                        strokeWidth="2"
+                                        opacity="0.95"
+                                        className="drop-shadow-2xl"
+                                    />
+                                    
+                                    {/* Stage Title */}
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y - 55}
+                                        fill="#22d3ee"
+                                        className="font-bold text-sm"
+                                        fontSize="14"
+                                    >
+                                        {getCurrentPoint()?.stage}
+                                    </text>
+                                    
+                                    {/* SEO Tags */}
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y - 35}
+                                        fill="#ffffff"
+                                        className="font-semibold text-xs"
+                                        fontSize="12"
+                                    >
+                                        SEO Tags:
+                                    </text>
+                                    
+                                    {getCurrentPoint()?.tags.map((tag, index) => (
+                                        <text
+                                            key={index}
+                                            x={mousePosition.x + 35}
+                                            y={mousePosition.y - 20 + (index * 15)}
+                                            fill="#94a3b8"
+                                            className="text-xs"
+                                            fontSize="11"
+                                        >
+                                            • {tag}
+                                        </text>
+                                    ))}
+                                    
+                                    {/* Metrics */}
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y + 20}
+                                        fill="#ffffff"
+                                        className="font-semibold text-xs"
+                                        fontSize="12"
+                                    >
+                                        Metrics:
+                                    </text>
+                                    
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y + 35}
+                                        fill="#94a3b8"
+                                        className="text-xs"
+                                        fontSize="11"
+                                    >
+                                        Difficulty: {getCurrentPoint()?.metrics.difficulty}
+                                    </text>
+                                    
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y + 50}
+                                        fill="#94a3b8"
+                                        className="text-xs"
+                                        fontSize="11"
+                                    >
+                                        Volume: {getCurrentPoint()?.metrics.volume}
+                                    </text>
+                                    
+                                    <text
+                                        x={mousePosition.x + 35}
+                                        y={mousePosition.y + 65}
+                                        fill="#94a3b8"
+                                        className="text-xs"
+                                        fontSize="11"
+                                    >
+                                        CPC: {getCurrentPoint()?.metrics.cpc}
+                                    </text>
+                                </g>
+                            )}
                         </svg>
+                        
+                        {/* Instructions */}
+                        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center">
+                            <p className="text-xs text-gray-500 font-mono">
+                                Hover over the graph points to see SEO stages & tags
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

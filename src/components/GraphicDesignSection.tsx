@@ -53,6 +53,45 @@ const GraphicDesignSection: React.FC = () => {
             });
         }
     };
+
+    // Touch events for mobile swipe functionality
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        if (!containerRef.current || !svgRef.current) return;
+        e.preventDefault(); // Prevent scrolling when touching canvas area
+    };
+
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+        if (!containerRef.current || !svgRef.current) return;
+        e.preventDefault(); // Prevent scrolling when swiping on canvas area
+
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const touch = e.touches[0];
+        const brushX = touch.clientX - containerRect.left;
+        const brushY = touch.clientY - containerRect.top;
+        setBrushPosition({ x: brushX, y: brushY });
+
+        // Check if touch is over the canvas area
+        const svgRect = svgRef.current.getBoundingClientRect();
+        const svgX = touch.clientX - svgRect.left;
+        const svgY = touch.clientY - svgRect.top;
+
+        if (svgX >= 0 && svgX <= svgRect.width && svgY >= 0 && svgY <= svgRect.height) {
+            const viewBoxSize = 200;
+            const scale = viewBoxSize / svgRect.width;
+            const pathX = svgX * scale;
+            const pathY = svgY * scale;
+            
+            setScratchedPath(prev => {
+                const command = prev.trim() === '' ? 'M' : 'L';
+                return `${prev} ${command} ${pathX.toFixed(2)} ${pathY.toFixed(2)}`;
+            });
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setBrushPosition(null);
+        setIsOverCanvas(false);
+    };
     
     const handleMouseLeaveContainer = () => {
         setBrushPosition(null);
@@ -69,6 +108,9 @@ const GraphicDesignSection: React.FC = () => {
                         className="relative w-full h-96 flex items-center justify-center select-none"
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeaveContainer}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
                         style={{ cursor: 'none' }}
                      >
                         {/* Easel Structure */}

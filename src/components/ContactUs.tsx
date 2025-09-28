@@ -9,12 +9,11 @@ const ContactUs: React.FC = () => {
             
             {/* Hero Section */}
             <section className="py-20 md:py-32 bg-gradient-to-br from-gray-900 to-black">
-                <FaviconCorner />
                 <div className="container mx-auto px-6 text-center">
-                    <h1 className="text-5xl md:text-7xl font-black text-white mb-6">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6">
                         Get In <span className="text-cyan-400">Touch</span>
                     </h1>
-                    <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                    <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
                         Ready to transform your digital presence? Let's discuss your project and bring your vision to life.
                     </p>
                 </div>

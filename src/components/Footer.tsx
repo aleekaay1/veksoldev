@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <img 
-              src="/src/logo.png" 
+              src="/images/logo.png" 
               alt="Vektor Solutions Footer Logo" 
               className="h-16 mb-4 opacity-70"
             />

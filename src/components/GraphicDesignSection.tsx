@@ -107,7 +107,7 @@ const GraphicDesignSection: React.FC = () => {
                             {/* Layer 1: The hidden content (Logo on black background) */}
                             <rect x="10" y="10" width="180" height="180" rx="5" fill="black" />
                             <image 
-                                href="/src/favicon.png" 
+                                href="/images/favicon.png" 
                                 x="15" y="15" width="170" height="170" 
                                 preserveAspectRatio="xMidYMid meet"
                             />

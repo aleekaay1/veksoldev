@@ -25,14 +25,6 @@ const Header: React.FC = () => {
           >
             Contact Us
           </Link>
-          <a 
-            href="https://veksol.com/contact-us/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-cyan-500 text-black font-bold py-2 px-6 rounded-full transition-all duration-300 hover:bg-white hover:shadow-lg hover:shadow-cyan-400/50 transform hover:-translate-y-1"
-          >
-            Get Started
-          </a>
         </div>
       </div>
     </header>

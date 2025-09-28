@@ -104,13 +104,17 @@ const GraphicDesignSection: React.FC = () => {
                                 </mask>
                             </defs>
                             
-                            {/* Layer 1: The hidden content (Logo on black background) */}
+                            {/* Layer 1: The hidden content (Starry Night background) */}
                             <rect x="10" y="10" width="180" height="180" rx="5" fill="black" />
                             <image 
-                                href="/images/favicon.png" 
-                                x="15" y="15" width="170" height="170" 
-                                preserveAspectRatio="xMidYMid meet"
+                                href="/images/starynight.jpg" 
+                                x="10" y="10" width="180" height="180" 
+                                preserveAspectRatio="xMidYMid slice"
                             />
+                            {/* Copyright notice */}
+                            <text x="15" y="190" fontSize="8" fill="rgba(255,255,255,0.3)" fontFamily="Arial">
+                                Inspired by Van Gogh's Starry Night
+                            </text>
 
                             {/* Layer 2: The scratchable gray layer on top */}
                              <rect 

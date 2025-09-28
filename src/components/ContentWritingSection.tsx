@@ -111,7 +111,7 @@ const ContentWritingSection: React.FC = () => {
                                     {/* Tag Background with Glow */}
                                     <div 
                                         className="relative px-3 py-2 rounded-lg border-2 font-mono font-bold text-xs transition-all duration-500 text-center min-w-[80px]"
-                                        style={{
+                                style={{
                                             color: tag.color,
                                             borderColor: tag.color,
                                             backgroundColor: `${tag.color}15`,

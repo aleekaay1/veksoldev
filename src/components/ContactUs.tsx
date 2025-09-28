@@ -1,5 +1,4 @@
 import React from 'react';
-import FaviconCorner from './FaviconCorner';
 import Header from './Header';
 
 const ContactUs: React.FC = () => {
@@ -8,7 +7,7 @@ const ContactUs: React.FC = () => {
             <Header />
             
             {/* Hero Section */}
-            <section className="py-20 md:py-32 bg-gradient-to-br from-gray-900 to-black">
+            <section className="pt-32 pb-20 md:py-32 bg-gradient-to-br from-gray-900 to-black">
                 <div className="container mx-auto px-6 text-center">
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6">
                         Get In <span className="text-cyan-400">Touch</span>
@@ -21,7 +20,6 @@ const ContactUs: React.FC = () => {
 
             {/* Contact Information Cards */}
             <section className="py-20 bg-[#0a0a0a]">
-                <FaviconCorner />
                 <div className="container mx-auto px-6">
                     <div className="grid md:grid-cols-2 gap-12 mb-16">
                         {/* USA Office */}

@@ -65,13 +65,10 @@ const TechShowcase: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
                         <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-                            Built on the <span className="text-cyan-400">Bleeding Edge</span>
+                            <span className="text-cyan-400">INNOVATE</span>, <span className="text-cyan-400">CALIBRATE</span>, <span className="text-cyan-400">AUTOMATE</span> & <span className="text-cyan-400">ACCELERATE</span>
                         </h2>
                         <p className="text-gray-400 mb-6">
-                            Our solutions are forged with the most powerful and scalable technologies available. We don't just follow trends; we define them. By leveraging a robust stack of modern frameworks, AI libraries, and cloud infrastructure, we build products that are not only innovative but also secure, reliable, and future-proof.
-                        </p>
-                        <p className="text-gray-400">
-                            From private, on-device AI with Local LLMs to globally-scalable web platforms, our technical expertise is the bedrock of your success.
+                            We are the engine that powers your digital future, fueled by our finest human resources and the latest AI tools. We envision, design, and create optimized digital ecosystems that ensure an innovative and seamless IT platform.
                         </p>
                     </div>
                     <div className="grid grid-cols-3 sm:grid-cols-3 gap-8">

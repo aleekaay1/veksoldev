@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 
 const ContentWritingSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
@@ -31,7 +32,8 @@ const ContentWritingSection: React.FC = () => {
     };
 
     return (
-        <section id="seo-services" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden">
+        <section id="seo-services" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

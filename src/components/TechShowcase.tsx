@@ -1,5 +1,6 @@
 import React from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
+import FaviconCorner from './FaviconCorner';
 
 const TechLogo: React.FC<{ name: string; logo: React.ReactNode; index: number }> = ({ logo, index }) => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.5 });
@@ -53,6 +54,7 @@ const TechShowcase: React.FC = () => {
 
     return (
         <section className="py-24 md:py-40 bg-black relative overflow-hidden">
+            <FaviconCorner />
             <div className="absolute inset-0 bg-circuit-board opacity-5 z-0"></div>
             <div
                 className={`absolute -bottom-1/3 -left-1/4 w-full h-full bg-cyan-500/10 rounded-full blur-[150px] transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}

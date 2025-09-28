@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import FaviconCorner from './FaviconCorner';
 
 const Hero: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,6 +12,8 @@ const Hero: React.FC = () => {
 
         let animationFrameId: number;
         let particles: Particle[] = [];
+        let clickCount = 0;
+        const maxClicks = 50;
         const mouse = { x: null as number | null, y: null as number | null };
 
         const resizeCanvas = () => {
@@ -126,27 +129,49 @@ const Hero: React.FC = () => {
         };
         
         const handleMouseClick = (event: MouseEvent) => {
-            for (let i = 0; i < 15; i++) {
-                const size = Math.random() * 3 + 1.5;
-                const x = event.clientX + (Math.random() - 0.5) * 10;
-                const y = event.clientY + (Math.random() - 0.5) * 10;
-                const speedX = (Math.random() - 0.5) * 2.5;
-                const speedY = (Math.random() - 0.5) * 2.5;
-                const color = 'rgba(255, 255, 255, 1)';
-                particles.push(new Particle(x, y, size, speedX, speedY, color));
+            // Check if we've reached the click limit
+            if (clickCount >= maxClicks) {
+                return;
+            }
+            
+            // Check if click is within the Hero section
+            const heroSection = document.querySelector('section');
+            if (!heroSection) return;
+            
+            const rect = heroSection.getBoundingClientRect();
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            // Only create particles if click is within Hero section bounds
+            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                const canvasX = x - rect.left;
+                const canvasY = y - rect.top;
+                
+                clickCount++;
+                
+                for (let i = 0; i < 5; i++) {
+                    const size = Math.random() * 4 + 2;
+                    const particleX = canvasX + (Math.random() - 0.5) * 20;
+                    const particleY = canvasY + (Math.random() - 0.5) * 20;
+                    const speedX = (Math.random() - 0.5) * 3;
+                    const speedY = (Math.random() - 0.5) * 3;
+                    const color = 'rgba(255, 255, 255, 0.9)';
+                    const newParticle = new Particle(particleX, particleY, size, speedX, speedY, color);
+                    particles.push(newParticle);
+                }
             }
         };
 
         window.addEventListener('resize', () => { resizeCanvas(); init(); });
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseout', handleMouseOut);
-        canvas.addEventListener('click', handleMouseClick);
+        window.addEventListener('click', handleMouseClick);
 
         return () => {
             window.removeEventListener('resize', () => { resizeCanvas(); init(); });
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseout', handleMouseOut);
-            canvas.removeEventListener('click', handleMouseClick);
+            window.removeEventListener('click', handleMouseClick);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
@@ -162,11 +187,12 @@ const Hero: React.FC = () => {
 
     return (
         <section className="relative h-screen flex items-center justify-center text-center overflow-hidden">
+            <FaviconCorner />
             <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />
             <div className="absolute inset-0 bg-black/70 z-10"></div>
             <div className="z-20 relative px-4">
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-wider mb-4 animate-fadeIn">
-                    <span className="text-cyan-400">INNOVATE</span>, <span className="text-cyan-400">CALIBRATE</span>, <span className="text-cyan-400">AUTOMATE</span> & <span className="text-cyan-400">ACCELERATE</span>
+                    <span className="text-cyan-400">INNOVATE</span>, <span className="text-cyan-400">CALIBRATE</span>, <span className="text-cyan-400">AUTOMATE</span> & <span className="text-cyan-400">ACCELERATE</span><span className="text-white">.</span>
                 </h1>
                 <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 font-light mb-8 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
                     We are the engine that powers your digital future, fueled by our finest human resources and the latest AI tools. We envision, design, and create optimized digital ecosystems that ensure an innovative and seamless IT platform.

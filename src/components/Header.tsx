@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md shadow-lg shadow-cyan-500/10' : 'bg-transparent'}`}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
-           <img src="https://veksol.com/wp-content/uploads/2025/04/footer-logo-veksol.png" alt="Vektor Solutions Logo" className="h-12" />
+           <img src="/src/logo.png" alt="Vektor Solutions Logo" className="h-16" />
         </div>
         <a 
           href="https://veksol.com/contact-us/"

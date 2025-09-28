@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 import MatrixAnimation from './animations/MatrixAnimation';
 
 const LocalLLMSection: React.FC = () => {
@@ -25,7 +26,8 @@ const LocalLLMSection: React.FC = () => {
     };
 
     return (
-        <section id="local-llm" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden">
+        <section id="local-llm" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

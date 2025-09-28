@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 
 const GraphicDesignSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
@@ -59,7 +60,8 @@ const GraphicDesignSection: React.FC = () => {
     };
 
     return (
-        <section id="graphic-design" className="py-20 md:py-32 bg-black overflow-hidden">
+        <section id="graphic-design" className="py-20 md:py-32 bg-black overflow-hidden relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                      <div 
@@ -102,10 +104,10 @@ const GraphicDesignSection: React.FC = () => {
                                 </mask>
                             </defs>
                             
-                            {/* Layer 1: The hidden content (Logo on white background) */}
-                            <rect x="10" y="10" width="180" height="180" rx="5" fill="white" />
+                            {/* Layer 1: The hidden content (Logo on black background) */}
+                            <rect x="10" y="10" width="180" height="180" rx="5" fill="black" />
                             <image 
-                                href="https://veksol.com/wp-content/uploads/2025/04/massage-therapy-1.png" 
+                                href="/src/favicon.png" 
                                 x="15" y="15" width="170" height="170" 
                                 preserveAspectRatio="xMidYMid meet"
                             />

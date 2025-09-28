@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 
 const WebDevSection: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
@@ -14,7 +15,8 @@ const WebDevSection: React.FC = () => {
     };
 
     return (
-        <section id="services" className="py-20 md:py-32 bg-black overflow-hidden">
+        <section id="services" className="py-20 md:py-32 bg-black overflow-hidden relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     {/* Interactive Animation Container */}

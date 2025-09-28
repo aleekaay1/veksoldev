@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 
 const TypingBubble: React.FC<{ text: string, delay: number, isVisible: boolean }> = ({ text, delay, isVisible }) => {
     const [displayedText, setDisplayedText] = useState('');
@@ -36,7 +37,8 @@ const AIChatbotSection: React.FC = () => {
     const service = SERVICES[2];
 
     return (
-        <section id="ai-chatbot" className="py-20 md:py-32 bg-black overflow-hidden">
+        <section id="ai-chatbot" className="py-20 md:py-32 bg-black overflow-hidden relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="relative w-full h-80 flex flex-col justify-center items-start space-y-4 p-4">

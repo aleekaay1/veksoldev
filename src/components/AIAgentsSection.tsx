@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SERVICES } from '../constants';
+import FaviconCorner from './FaviconCorner';
 
 const AIAgentsSection: React.FC = () => {
     const service = SERVICES[1];
@@ -12,7 +13,8 @@ const AIAgentsSection: React.FC = () => {
     };
 
     return (
-        <section id="ai-agents" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden">
+        <section id="ai-agents" className="py-20 md:py-32 bg-[#0a0a0a] overflow-hidden relative">
+            <FaviconCorner />
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                      <div className="transition-all duration-700 ease-out">

@@ -1,11 +1,13 @@
 import React from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
+import FaviconCorner from './FaviconCorner';
 
 const CTA: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
 
     return (
-        <section id="contact" className="py-24 md:py-40 bg-[#0a0a0a]">
+        <section id="contact" className="py-24 md:py-40 bg-[#0a0a0a] relative">
+            <FaviconCorner />
             <div ref={ref} className="container mx-auto px-6 text-center">
                 <div className={`
                     bg-gradient-to-r from-cyan-500/80 to-purple-600/80 rounded-2xl p-8 md:p-12 shadow-2xl shadow-cyan-500/20

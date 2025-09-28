@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -17,14 +18,22 @@ const Header: React.FC = () => {
         <div className="flex items-center">
            <img src="/src/logo.png" alt="Vektor Solutions Logo" className="h-16" />
         </div>
-        <a 
-          href="https://veksol.com/contact-us/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-cyan-500 text-black font-bold py-2 px-6 rounded-full transition-all duration-300 hover:bg-white hover:shadow-lg hover:shadow-cyan-400/50 transform hover:-translate-y-1"
-        >
-          Contact Us
-        </a>
+        <div className="flex items-center space-x-6">
+          <Link 
+            to="/contact"
+            className="text-gray-300 hover:text-cyan-400 transition-colors duration-300 font-medium"
+          >
+            Contact Us
+          </Link>
+          <a 
+            href="https://veksol.com/contact-us/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-cyan-500 text-black font-bold py-2 px-6 rounded-full transition-all duration-300 hover:bg-white hover:shadow-lg hover:shadow-cyan-400/50 transform hover:-translate-y-1"
+          >
+            Get Started
+          </a>
+        </div>
       </div>
     </header>
   );

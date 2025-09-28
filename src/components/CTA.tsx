@@ -1,6 +1,7 @@
 import React from 'react';
 import { useOnScreen } from '../hooks/useOnScreen';
 import FaviconCorner from './FaviconCorner';
+import { Link } from 'react-router-dom';
 
 const CTA: React.FC = () => {
     const [ref, isVisible] = useOnScreen<HTMLDivElement>({ threshold: 0.3 });
@@ -20,14 +21,12 @@ const CTA: React.FC = () => {
                     <p className="text-lg md:text-xl max-w-2xl mx-auto text-white/90 mb-8">
                         Let's turn your vision into a reality. We're ready to build the next big thing with you.
                     </p>
-                    <a
-                        href="https://veksol.com/contact-us/"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        to="/contact"
                         className="bg-white text-black font-bold py-4 px-10 rounded-full transition-all duration-300 hover:bg-gray-200 hover:shadow-lg hover:shadow-white/50 transform hover:-translate-y-1 text-lg inline-block"
                     >
                         Get In Touch
-                    </a>
+                    </Link>
                 </div>
             </div>
         </section>

@@ -166,12 +166,10 @@ const Hero: React.FC = () => {
             <div className="absolute inset-0 bg-black/70 z-10"></div>
             <div className="z-20 relative px-4">
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-wider mb-4 animate-fadeIn">
-                    Innovate. Automate.
-                    <br />
-                    <span className="text-cyan-400">Elevate.</span>
+                    <span className="text-cyan-400">INNOVATE</span>, <span className="text-cyan-400">CALIBRATE</span>, <span className="text-cyan-400">AUTOMATE</span> & <span className="text-cyan-400">ACCELERATE</span>
                 </h1>
                 <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 font-light mb-8 animate-fadeIn" style={{ animationDelay: '0.5s' }}>
-                    We are Vektor Solutions. We build the future of digital interaction with cutting-edge AI and elegant web solutions.
+                    We are the engine that powers your digital future, fueled by our finest human resources and the latest AI tools. We envision, design, and create optimized digital ecosystems that ensure an innovative and seamless IT platform.
                 </p>
                 <a
                     href="#services"
